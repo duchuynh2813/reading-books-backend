@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'UserMembers',
     'corsheaders',
     'image',
+    'Accounts',
 ]
 
 
