@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -20,6 +21,15 @@ class Tacgia(models.Model):
 
 
 class Sach(models.Model):
+    class NewManager(models.Manager):
+        def get_queryset(self):
+            return super().get_queryset()
+
+    options = (
+        ('draft', 'Draft'),
+        ('published', 'Published'),
+    )
+
     tieude = models.CharField(max_length=255 ,null= True, blank=True)
     hinh = models.ImageField(null=True, blank=True)
     tacgia = models.CharField(max_length=255 ,null= True, blank=True)
@@ -27,6 +37,9 @@ class Sach(models.Model):
     theloai = models.CharField(max_length=255 ,null= True, blank=True)
     ngaydang = models.DateTimeField(null= True, auto_now_add= True)
     mota = models.TextField(null= True, blank=True)
+    favourites = models.ManyToManyField(
+        User, related_name='favourite', default=None, blank=True)
+    newmanager = NewManager()
 
     def __str__(self):
         return self.tieude

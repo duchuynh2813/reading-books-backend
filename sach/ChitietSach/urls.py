@@ -2,6 +2,7 @@ from django.urls import path
 
 from . import views
 
+
 """
 urlpatterns = [
     path('api-sach', views.ListCreateViewSach.as_view()),
@@ -12,13 +13,21 @@ urlpatterns = [
 
 """
 urlpatterns = [
-	path('api-overview', views.apiOverview, name="api-overview"),
+	path('api-overview/', views.apiOverview, name="api-overview"),
+
 	path('api-sach-list/', views.taskListSach, name="sach-list"),
 	path('api-sach-detail/<str:pk>/', views.taskDetailSach, name="sach-detail"),
 	path('api-sach-delete/<str:pk>/', views.taskDeleteSach, name="sach-delete"),
-	path('api-chuong-list/', views.taskListChuong, name="sach-list"),
-	path('api-chuong-detail/<str:pk>/', views.taskDetailChuong, name="sach-detail"),
-	path('api-chuong-delete/<str:pk>/', views.taskDeleteChuong, name="sach-delete"),
 
+	path('api-chuong-list/', views.taskListChuong, name="chuong-list"),
+	path('api-chuong-detail/<str:pk>/', views.taskDetailChuong, name="chuong-detail"),
+	path('api-chuong-delete/<str:pk>/', views.taskDeleteChuong, name="chuong-delete"),
 
+	path('api-danhmuc-list/', views.taskListDanhmuc, name="danhmuc-list"),
+	path('api-danhmuc-detail/<str:pk>/', views.taskDetailDanhmuc, name="danhmuc-detail"),
+	path('api-danhmuc-delete/<str:pk>/', views.taskDeleteDanhmuc, name="danhmuc-delete"),
+
+	path('api-theloai-list/', views.taskListTheloai, name="theloai-list"),
+	path('api-theloai-detail/<str:pk>/', views.taskDetailTheloai, name="theloai-detail"),
+	path('api-theloai-delete/<str:pk>/', views.taskDeleteTheloai, name="theloai-delete"),
 ]

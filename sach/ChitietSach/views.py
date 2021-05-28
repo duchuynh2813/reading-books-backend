@@ -1,16 +1,14 @@
-
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
-
 from rest_framework import status
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
-from .models import Sach, Chuong
-from .serializer import SachSerializer, ChuongSerializer
+from .models import Sach, Chuong, Danhmuc, Theloai
+from .serializer import SachSerializer, ChuongSerializer, DanhmucSerializer, TheloaiSerializer
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from django.shortcuts import render
+from django.shortcuts import render,  get_object_or_404, HttpResponseRedirect
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
 """
@@ -121,6 +119,14 @@ def apiOverview(request):
 		'List-Chuong': '/api-chuong-list/',
 		'DetailView-Chuong': '/api-chuong-detail/<str:pk>/',
 		'Delete-Chuong': '/api-chuong-delete/<str:pk>/',
+
+		'List-DanhMuc': '/api-danhmuc-list/',
+		'DetailView-DanhMuc': '/api-danhmuc-detail/<str:pk>/',
+		'Delete-DanhMuc': '/api-danhmuc-delete/<str:pk>/',
+
+        'List-Theloai': '/api-theloai-list/',
+		'DetailView-Theloai': '/api-theloai-detail/<str:pk>/',
+		'Delete-Theloai': '/api-theloai-delete/<str:pk>/',
 		}
 	return Response(api_urls)
 
@@ -166,5 +172,48 @@ def taskDeleteChuong(request, pk):
 
 	return Response('Item succsesfully delete!')
 
+
+@api_view(['GET'])
+def taskListDanhmuc(request):
+	tasks = Danhmuc.objects.all().order_by('id')
+	serializer = DanhmucSerializer(tasks, many=True)
+
+	return Response(serializer.data)
+
+@api_view(['GET'])
+def taskDetailDanhmuc(request, pk):
+	tasks = Danhmuc.objects.get(id=pk)
+	serializer = DanhmucSerializer(tasks, many=False)
+
+	return Response(serializer.data)
+
+@api_view(['DELETE'])
+def taskDeleteDanhmuc(request, pk):
+	task = Danhmuc.objects.get(id=pk)
+	task.delete()
+
+	return Response('Item succsesfully delete!')
+
+
+@api_view(['GET'])
+def taskListTheloai(request):
+	tasks = Theloai.objects.all().order_by('id')
+	serializer = TheloaiSerializer(tasks, many=True)
+
+	return Response(serializer.data)
+
+@api_view(['GET'])
+def taskDetailTheloai(request, pk):
+	tasks = Theloai.objects.get(id=pk)
+	serializer = TheloaiSerializer(tasks, many=False)
+
+	return Response(serializer.data)
+
+@api_view(['DELETE'])
+def taskDeleteTheloai(request, pk):
+	task = Theloai.objects.get(id=pk)
+	task.delete()
+
+	return Response('Item succsesfully delete!')
 
 
