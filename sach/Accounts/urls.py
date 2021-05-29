@@ -7,6 +7,4 @@ urlpatterns = [
 	path('api-account-list/', views.taskListAccount, name="account-list"),
 	path('api-account-detail/<str:pk>/', views.taskDetailAccount, name="account-detail"),
     path('api-account-delete/<str:pk>/', views.taskDeleteAccount, name="account-delete"),
-    path('fav/<int:id>/', views.favourite_add, name='favourite_add'),
-    path('profile/favourites/', views.favourite_list, name='favourite_list'),
 ]
