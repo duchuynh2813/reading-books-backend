@@ -8,6 +8,7 @@ from .serializer import SachSerializer, ChuongSerializer, DanhmucSerializer, The
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .forms import CommentForm
+from rest_framework import viewsets
 
 
 # Create your views here.
@@ -239,3 +240,52 @@ def post_detail(request, pk):
                                            'comments': comments,
                                            'new_comment': new_comment,
                                            'comment_form': comment_form})
+
+
+class SachDanhmucViewset(viewsets.ModelViewSet):
+    serializer_class = SachSerializer
+
+    def get_queryset(self):
+        sach_s = Sach.objects.all()
+        return sach_s
+
+    def retrieve(self, request, *args, **kwargs):
+         params = kwargs
+         print(params['pk'])
+         params_list = params['pk'].split('-')
+         sachs = Sach.objects.filter(
+             danhmuc=params_list[0])
+         serializer = SachSerializer(sachs, many=True)
+         return Response(serializer.data)
+
+class SachTheloaiViewset(viewsets.ModelViewSet):
+    serializer_class = SachSerializer
+
+    def get_queryset(self):
+        sach_s = Sach.objects.all()
+        return sach_s
+
+    def retrieve(self, request, *args, **kwargs):
+         params = kwargs
+         print(params['pk'])
+         params_list = params['pk'].split('-')
+         sachs = Sach.objects.filter(
+             theloai=params_list[0])
+         serializer = SachSerializer(sachs, many=True)
+         return Response(serializer.data)
+
+class ChuongViewset(viewsets.ModelViewSet):
+    serializer_class = ChuongSerializer
+
+    def get_queryset(self):
+        sach_s = Chuong.objects.all()
+        return sach_s
+
+    def retrieve(self, request, *args, **kwargs):
+         params = kwargs
+         print(params['pk'])
+         params_list = params['pk'].split('-')
+         sachs = Chuong.objects.filter(
+             tieude=params_list[0])
+         serializer = ChuongSerializer(sachs, many=True)
+         return Response(serializer.data)

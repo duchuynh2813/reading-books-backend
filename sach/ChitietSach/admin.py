@@ -3,7 +3,7 @@ from .models import Sach, Chuong, Tacgia, Danhmuc, Theloai, Comment
 # Register your models here.
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ['id','tieude', 'ngaydang']
+    list_display = ['id','tieude','danhmuc','theloai','tacgia','ngaydang']
     search_fields = ['tieude']
 
 

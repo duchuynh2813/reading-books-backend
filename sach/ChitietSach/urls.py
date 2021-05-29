@@ -1,8 +1,17 @@
 from django.urls import path
+from rest_framework.routers import DefaultRouter
+from django.conf.urls import url, include
 
 from . import views
 
+router = DefaultRouter()
+router.register('sach-danhmuc', views.SachDanhmucViewset, basename='sach-danhmuc')
+router.register('chuong', views.ChuongViewset, basename='chuong')
+router.register('sach-theloai', views.SachTheloaiViewset, basename='sach-theloai')
+
+
 urlpatterns = [
+	url('', include(router.urls)),
 	path('api-overview/', views.apiOverview, name="api-overview"),
 
 	path('api-sach-list/', views.taskListSach, name="sach-list"),
