@@ -1,6 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
-
 
 # Create your models here.
 
@@ -21,26 +19,14 @@ class Tacgia(models.Model):
 
 
 class Sach(models.Model):
-    class NewManager(models.Manager):
-        def get_queryset(self):
-            return super().get_queryset()
-
-    options = (
-        ('draft', 'Draft'),
-        ('published', 'Published'),
-    )
-
     tieude = models.CharField(max_length=255 ,null= True, blank=True)
     hinh = models.ImageField(null=True, blank=True)
     tacgia = models.CharField(max_length=255 ,null= True, blank=True)
-    danhmuc = models.CharField(max_length=255 ,null= True, blank=True)
-    theloai = models.CharField(max_length=255 ,null= True, blank=True)
+    danhmuc = models.ForeignKey(Danhmuc, on_delete=models.PROTECT,max_length=255 ,null= True, blank=True)
+    theloai = models.ForeignKey(Theloai, on_delete=models.PROTECT,max_length=255 ,null= True, blank=True)
     ngaydang = models.DateTimeField(null= True, auto_now_add= True)
     mota = models.TextField(null= True, blank=True)
-    favourites = models.ManyToManyField(
-        User, related_name='favourite', default=None, blank=True)
-    newmanager = NewManager()
-
+   
     def __str__(self):
         return self.tieude
 
@@ -52,13 +38,16 @@ class Chuong(models.Model):
     def __str__(self):
         return self.sochuong
 
-"""
-class User(models.Model):
-    username = models.CharField(max_length=255, help_text='Tên tài khoản')
-    email = models.CharField(max_length=255, help_text='Tên email')
+class Comment(models.Model):
+    chuong = models.ForeignKey(Chuong,on_delete=models.CASCADE,related_name='comments')
+    name = models.CharField(max_length=80)
+    email = models.EmailField()
+    body = models.TextField()
+    created_on = models.DateTimeField(auto_now_add=True)
+    active = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ['created_on']
 
-
-class ProfileUser(models.Model):
-
-"""
+    def __str__(self):
+        return 'Comment {} by {}'.format(self.body, self.name)

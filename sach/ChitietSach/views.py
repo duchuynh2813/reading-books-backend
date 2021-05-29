@@ -1,14 +1,14 @@
 from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-
-from .models import Sach, Chuong, Danhmuc, Theloai
-from .serializer import SachSerializer, ChuongSerializer, DanhmucSerializer, TheloaiSerializer
-
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
 from django.shortcuts import render,  get_object_or_404, HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from .models import Sach, Chuong, Danhmuc, Theloai, Comment
+from .serializer import SachSerializer, ChuongSerializer, DanhmucSerializer, TheloaiSerializer
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .forms import CommentForm
+
 
 # Create your views here.
 """
@@ -216,4 +216,26 @@ def taskDeleteTheloai(request, pk):
 
 	return Response('Item succsesfully delete!')
 
+def post_detail(request, pk):
+    template_name = 'post_detail.html'
+    post = get_object_or_404(Chuong, pk=pk)
+    comments = post.comments.filter(active=True)
+    new_comment = None
+    # Comment posted
+    if request.method == 'POST':
+        comment_form = CommentForm(data=request.POST)
+        if comment_form.is_valid():
 
+            # Create Comment object but don't save to database yet
+            new_comment = comment_form.save(commit=False)
+            # Assign the current post to the comment
+            new_comment.post = post
+            # Save the comment to the database
+            new_comment.save()
+    else:
+        comment_form = CommentForm()
+
+    return render(request,"post_detail.html", {'post': post,
+                                           'comments': comments,
+                                           'new_comment': new_comment,
+                                           'comment_form': comment_form})

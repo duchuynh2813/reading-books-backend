@@ -5,9 +5,9 @@
     <title>Dang ky thanh gnhap</title>
 </head>
 <body>
-    <form action="{% url 'UserMembers:dangky' %}" method="post">
+    <form action="{% url 'UserMembers:dangky' %}" method="POST">
         {% csrf_token %}
-        {{rF.as_p}}
+        {{form.as_p}}
         <input type="submit">
     </form>
 </body>

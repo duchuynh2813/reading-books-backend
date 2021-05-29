@@ -2,16 +2,6 @@ from django.urls import path
 
 from . import views
 
-
-"""
-urlpatterns = [
-    path('api-sach', views.ListCreateViewSach.as_view()),
-    path('api-chuong', views.ListCreateViewChuong.as_view()),
-    path('api-sach/<int:pk>', views.UpdateDeleteViewSach.as_view()),
-    path('api-chuong/<int:pk>', views.UpdateDeleteViewChuong.as_view()),
-]
-
-"""
 urlpatterns = [
 	path('api-overview/', views.apiOverview, name="api-overview"),
 
@@ -30,4 +20,6 @@ urlpatterns = [
 	path('api-theloai-list/', views.taskListTheloai, name="theloai-list"),
 	path('api-theloai-detail/<str:pk>/', views.taskDetailTheloai, name="theloai-detail"),
 	path('api-theloai-delete/<str:pk>/', views.taskDeleteTheloai, name="theloai-delete"),
+
+	path('<int:pk>/', views.post_detail, name='post_detail')
 ]
