@@ -13,7 +13,7 @@ def user_directory_path(instance, filename):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     avatar = models.ImageField(
-        upload_to=user_directory_path, default='user/avatar.png')
+        upload_to=user_directory_path, default='users/avatar.png')
     bio = models.TextField(max_length=500, blank=True)
 
     def clean(self):
