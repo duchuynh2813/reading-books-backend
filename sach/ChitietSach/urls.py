@@ -30,5 +30,5 @@ urlpatterns = [
 	path('api-theloai-detail/<str:pk>/', views.taskDetailTheloai, name="theloai-detail"),
 	path('api-theloai-delete/<str:pk>/', views.taskDeleteTheloai, name="theloai-delete"),
 
-	path('<int:pk>/', views.post_detail, name='post_detail')
+	path('<int:pk>/', views.post, name='post'),
 ]

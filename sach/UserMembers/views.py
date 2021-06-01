@@ -50,6 +50,7 @@ class DangnhapThanhvien(View):
         
         login(request, user)
         return HttpResponse( 'Đăng nhập thành công user: %s ' %user.id)
+        
 
 class ViewUser(View):
     def get(self, request):
