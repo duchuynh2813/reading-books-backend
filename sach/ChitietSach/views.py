@@ -293,4 +293,4 @@ class CommentViewset(viewsets.ModelViewSet):
          sachs = Comment.objects.filter(
              post=params_list[0])
          serializer = CommentSerializer(sachs, many=True)
-         return Response(serializer.data)
+         return JsonResponse(serializer.data, safe = False)
