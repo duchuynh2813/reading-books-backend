@@ -4,7 +4,7 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 from django.shortcuts import render,  get_object_or_404, HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Sach, Chuong, Danhmuc, Theloai, Comment
-from .serializer import SachSerializer, ChuongSerializer, DanhmucSerializer, TheloaiSerializer
+from .serializer import SachSerializer, ChuongSerializer, DanhmucSerializer, TheloaiSerializer, CommentSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .forms import CommentForm
@@ -227,6 +227,8 @@ def post(request, pk):
             form.save()
             return HttpResponseRedirect(request.path)
     return render(request, "post_detail.html/", {"post": post, "form": form})
+    
+
 
 
 class SachDanhmucViewset(viewsets.ModelViewSet):
@@ -275,4 +277,20 @@ class ChuongViewset(viewsets.ModelViewSet):
          sachs = Chuong.objects.filter(
              tieude=params_list[0])
          serializer = ChuongSerializer(sachs, many=True)
+         return Response(serializer.data)
+
+class CommentViewset(viewsets.ModelViewSet):
+    serializer_class = CommentSerializer
+
+    def get_queryset(self):
+        sach_s = Comment.objects.all()
+        return sach_s
+
+    def retrieve(self, request, *args, **kwargs):
+         params = kwargs
+         print(params['pk'])
+         params_list = params['pk'].split('-')
+         sachs = Comment.objects.filter(
+             post=params_list[0])
+         serializer = CommentSerializer(sachs, many=True)
          return Response(serializer.data)
