@@ -1,5 +1,7 @@
 from django.db import models
 from django.conf import settings
+from django.contrib.auth.models import User
+
 # Create your models here.
 
 class Theloai(models.Model):
@@ -41,6 +43,6 @@ class Chuong(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey(Chuong, on_delete=models.CASCADE, related_name='comments')
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField()
     date = models.DateTimeField(auto_now_add=True)

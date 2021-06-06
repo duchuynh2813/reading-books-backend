@@ -11,10 +11,12 @@ class PostAdminChuong(admin.ModelAdmin):
     list_display = ['id','sochuong', 'tieude']
     search_fields = ['sochuong']
  
-
+class CmtAdmin(admin.ModelAdmin):
+     list_display = ['id','author','post','body','date']
+        
 admin.site.register(Sach, PostAdmin)
 admin.site.register(Chuong, PostAdminChuong)
-admin.site.register(Comment)
+admin.site.register(Comment, CmtAdmin)
 admin.site.register(Tacgia)
 admin.site.register(Danhmuc)
 admin.site.register(Theloai)
